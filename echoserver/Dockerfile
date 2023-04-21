@@ -1,9 +1,9 @@
-FROM golang
-WORKDIR /workspace
+FROM golang:1.20
+WORKDIR /go/src
 COPY main.go ./
-ARG CGO_ENABLED=0 GOOS=linux GOARCH=amd64
-RUN go build -a -installsuffix static -o echoserver main.go
+RUN  --mount=type=cache,target=/root/.cache/go-build \
+  CGO_ENABLED=0 go build -ldflags "-w -s" -o echoserver main.go
 
-FROM gcr.io/distroless/static:nonroot
-COPY --from=0 /workspace/echoserver /usr/bin/echoserver
+FROM scratch
+COPY --from=0 /go/src/echoserver /usr/bin/echoserver
 ENTRYPOINT ["echoserver"]

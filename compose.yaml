@@ -1,0 +1,13 @@
+services:
+  azcopy:
+    image: ${REGISTRY_HOST}/${REGISTRY_NAMESPACE}/azcopy:${IMAGE_TAG:-10.18.1}
+    build: ./azcopy/
+
+  echoserver:
+    image: ${REGISTRY_HOST}/${REGISTRY_NAMESPACE}/echoserver:${IMAGE_TAG:-0.2.0}
+    build: ./echoserver/
+
+  netutils:
+    image: ${REGISTRY_HOST}/${REGISTRY_NAMESPACE}/netutils:${IMAGE_TAG:-0.2.0}
+    build: ./netutils/
+
